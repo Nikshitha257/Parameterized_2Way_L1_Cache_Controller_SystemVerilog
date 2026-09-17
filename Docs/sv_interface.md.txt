@@ -1,0 +1,35 @@
+# SystemVerilog Interface Documentation
+
+This project uses SystemVerilog interfaces to encapsulate communication between the CPU, the Cache Controller, and Main Memory. This approach minimizes port-list clutter and ensures type safety.
+
+## 1. `cpu_cache_if`
+This interface handles the communication between the CPU (Master) and the Cache Controller (Slave).
+
+- **Signals:**
+  - `addr`: 32-bit Address bus.
+  - `data_write`: 32-bit data sent from CPU to Cache.
+  - `data_read`: 32-bit data returned from Cache to CPU.
+  - `req`: CPU request signal.
+  - `rw`: Read/Write indicator (0=Read, 1=Write).
+  - `ready`: Cache signals readiness for new request.
+  - `valid_out`: Cache signals that data/operation is complete.
+
+- **Modports:**
+  - `cpu`: Defines signals for the CPU driver.
+  - `cache`: Defines signals for the Cache Controller receiver.
+
+## 2. `cache_mem_if`
+This interface handles the block-level communication between the Cache Controller (Master) and Main Memory (Slave).
+
+- **Signals:**
+  - `addr`: 32-bit address.
+  - `data_write`: 128-bit block data pushed to memory.
+  - `data_read`: 128-bit block data fetched from memory.
+  - `req`: Cache request to memory.
+  - `rw`: Read/Write indicator.
+  - `ready`: Memory readiness signal.
+  - `valid_out`: Memory signaling completion of transfer.
+
+- **Modports:**
+  - `cache`: Master interface for Cache Controller.
+  - `mem`: Slave interface for Main Memory.
